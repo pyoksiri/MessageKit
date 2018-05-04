@@ -164,6 +164,8 @@ public protocol MessagesDisplayDelegate: AnyObject {
     ///   - messagesCollectionView: The collection view requesting the information
     /// - Returns: Your customized animation block.
     func animationBlockForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> ((UIImageView) -> Void)?
+    
+    func configureAccessoryView(_ accessoryView: UIView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView)
 }
 
 public extension MessagesDisplayDelegate {
@@ -209,6 +211,8 @@ public extension MessagesDisplayDelegate {
         avatarView.initials = "?"
     }
 
+    func configureAccessoryView(_ accessoryView: UIView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
+    }
     // MARK: - Text Messages Defaults
 
     func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {

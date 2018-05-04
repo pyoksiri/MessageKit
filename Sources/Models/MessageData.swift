@@ -52,14 +52,22 @@ public enum MessageData {
     /// An emoji message.
     case emoji(String)
 
-    // MARK: - Not supported yet
+    // An photo from network message.
+    case networkPhoto(url: URL, placeHolder: UIImage)
 
-//    case audio(Data)
-//
-//    case system(String)
-//    
+    // An sticker message.
+    case sticker(UIImage)
+    
+    // An audio message.
+    case audio(URL)
+    
+    // An system message.
+    case system(String)
+    
+    
+    // MARK: - Not supported yet
 //    case custom(Any)
-//    
+//
 //    case placeholder
 
 }

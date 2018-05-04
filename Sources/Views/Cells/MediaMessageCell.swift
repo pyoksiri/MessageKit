@@ -61,6 +61,9 @@ open class MediaMessageCell: MessageCollectionViewCell {
         case .video(_, let image):
             imageView.image = image
             playButtonView.isHidden = false
+        case .networkPhoto(_, let placeHolder):
+            imageView.image = placeHolder
+            playButtonView.isHidden = false
         default:
             break
         }

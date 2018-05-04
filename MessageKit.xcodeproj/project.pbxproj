@@ -83,6 +83,10 @@
 		B7A03F731F866A06006AEF79 /* MessageKit+Availability.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F701F866A06006AEF79 /* MessageKit+Availability.swift */; };
 		B7A03F751F866A06006AEF79 /* MessageKit.h in Headers */ = {isa = PBXBuildFile; fileRef = B7A03F721F866A06006AEF79 /* MessageKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B7A03F7B1F866B85006AEF79 /* MessageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F7A1F866B85006AEF79 /* MessageCollectionViewCell.swift */; };
+		C02D2093209BB47700D3D993 /* AccessoryPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02D2092209BB47700D3D993 /* AccessoryPosition.swift */; };
+		C05E2CA9209C451300FDAC61 /* StickerMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05E2CA8209C451300FDAC61 /* StickerMessageCell.swift */; };
+		C05E2CAB209C46E700FDAC61 /* AudioMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05E2CAA209C46E700FDAC61 /* AudioMessageCell.swift */; };
+		C05E2CAD209C46F100FDAC61 /* SystemMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05E2CAC209C46F100FDAC61 /* SystemMessageCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -188,6 +192,10 @@
 		B7A03F711F866A06006AEF79 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B7A03F721F866A06006AEF79 /* MessageKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageKit.h; sourceTree = "<group>"; };
 		B7A03F7A1F866B85006AEF79 /* MessageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCollectionViewCell.swift; sourceTree = "<group>"; };
+		C02D2092209BB47700D3D993 /* AccessoryPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryPosition.swift; sourceTree = "<group>"; };
+		C05E2CA8209C451300FDAC61 /* StickerMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerMessageCell.swift; sourceTree = "<group>"; };
+		C05E2CAA209C46E700FDAC61 /* AudioMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMessageCell.swift; sourceTree = "<group>"; };
+		C05E2CAC209C46F100FDAC61 /* SystemMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemMessageCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -228,6 +236,9 @@
 				B7A03F391F866946006AEF79 /* MediaMessageCell.swift */,
 				B7A03F7A1F866B85006AEF79 /* MessageCollectionViewCell.swift */,
 				B7A03F361F866946006AEF79 /* TextMessageCell.swift */,
+				C05E2CA8209C451300FDAC61 /* StickerMessageCell.swift */,
+				C05E2CAA209C46E700FDAC61 /* AudioMessageCell.swift */,
+				C05E2CAC209C46F100FDAC61 /* SystemMessageCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -377,6 +388,7 @@
 		B09643991F295D58004D0129 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				C02D2092209BB47700D3D993 /* AccessoryPosition.swift */,
 				B7A03F1C1F866895006AEF79 /* Avatar.swift */,
 				1F82D1421FB1B75B00B81A88 /* AvatarPosition.swift */,
 				B7A03F211F866895006AEF79 /* DetectorType.swift */,
@@ -588,6 +600,7 @@
 				B7A03F3C1F866946006AEF79 /* LocationMessageCell.swift in Sources */,
 				1FF377AA20087D78004FD648 /* MessagesViewController+Menu.swift in Sources */,
 				38C57C7C1F9AE4890043CC03 /* InputStackView.swift in Sources */,
+				C02D2093209BB47700D3D993 /* AccessoryPosition.swift in Sources */,
 				B7A03F5B1F8669CA006AEF79 /* MessageType.swift in Sources */,
 				B7A03F6F1F8669EB006AEF79 /* String+Extensions.swift in Sources */,
 				B7A03F491F86694F006AEF79 /* InputBarItem.swift in Sources */,
@@ -602,11 +615,13 @@
 				B7A03F6C1F8669EB006AEF79 /* UIView+Extensions.swift in Sources */,
 				B7A03F3A1F866946006AEF79 /* TextMessageCell.swift in Sources */,
 				B7A03F191F86682C006AEF79 /* MessagesCollectionViewLayoutAttributes.swift in Sources */,
+				C05E2CAD209C46F100FDAC61 /* SystemMessageCell.swift in Sources */,
 				B7A03F461F86694F006AEF79 /* AvatarView.swift in Sources */,
 				B7A03F3D1F866946006AEF79 /* MediaMessageCell.swift in Sources */,
 				B7A03F331F866940006AEF79 /* MessageDateHeaderView.swift in Sources */,
 				B7A03F2E1F866895006AEF79 /* MessageData.swift in Sources */,
 				B7A03F7B1F866B85006AEF79 /* MessageCollectionViewCell.swift in Sources */,
+				C05E2CA9209C451300FDAC61 /* StickerMessageCell.swift in Sources */,
 				B7A03F6B1F8669EB006AEF79 /* UIColor+Extensions.swift in Sources */,
 				B7A03F5E1F8669CA006AEF79 /* MessagesLayoutDelegate.swift in Sources */,
 				B7A03F261F866895006AEF79 /* MessageKitDateFormatter.swift in Sources */,
@@ -631,6 +646,7 @@
 				B7A03F4D1F86694F006AEF79 /* MessagesCollectionView.swift in Sources */,
 				B7A03F351F866940006AEF79 /* MessageHeaderView.swift in Sources */,
 				B7A03F731F866A06006AEF79 /* MessageKit+Availability.swift in Sources */,
+				C05E2CAB209C46E700FDAC61 /* AudioMessageCell.swift in Sources */,
 				B7A03F2D1F866895006AEF79 /* LabelAlignment.swift in Sources */,
 				38C57C791F9AE3E50043CC03 /* SeparatorLine.swift in Sources */,
 				B7A03F2C1F866895006AEF79 /* DetectorType.swift in Sources */,

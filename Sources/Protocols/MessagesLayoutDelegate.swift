@@ -185,6 +185,10 @@ public protocol MessagesLayoutDelegate: AnyObject {
     /// The default value returned by this method is `false`.
     func shouldCacheLayoutAttributes(for message: MessageType) -> Bool
 
+    func accessorySize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize
+    
+    func accessoryPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AccessoryPosition
+
 }
 
 public extension MessagesLayoutDelegate {
@@ -224,6 +228,14 @@ public extension MessagesLayoutDelegate {
         return AvatarPosition(horizontal: .natural, vertical: .messageBottom)
     }
 
+    func accessorySize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
+        return CGSize(width: 30, height: 30)
+    }
+    
+    func accessoryPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AccessoryPosition {
+        return AccessoryPosition(horizontal: .natural, vertical: .messageBottom)
+    }
+    
     func headerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
         guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
             fatalError(MessageKitError.nilMessagesDisplayDelegate)

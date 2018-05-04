@@ -270,12 +270,18 @@ extension ConversationViewController: MessagesDataSource {
     }
 
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-        let name = message.sender.displayName
-        return NSAttributedString(string: name, attributes: [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: .caption1)])
+        switch message.data {
+        case .system:
+            return nil
+        default:
+            let name = message.sender.displayName
+            return NSAttributedString(string: name, attributes: [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: .caption1)])
+        }
     }
 
     func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-        
+        return nil
+        /*
         struct ConversationDateFormatter {
             static let formatter: DateFormatter = {
                 let formatter = DateFormatter()
@@ -285,7 +291,7 @@ extension ConversationViewController: MessagesDataSource {
         }
         let formatter = ConversationDateFormatter.formatter
         let dateString = formatter.string(from: message.sentDate)
-        return NSAttributedString(string: dateString, attributes: [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: .caption2)])
+        return NSAttributedString(string: dateString, attributes: [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: .caption2)])*/
     }
 
 }
@@ -311,14 +317,23 @@ extension ConversationViewController: MessagesDisplayDelegate {
     // MARK: - All Messages
     
     func backgroundColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        return isFromCurrentSender(message: message) ? UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1) : UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
+        switch message.data {
+        case .sticker, .system:
+            return UIColor.clear
+        default:
+            return isFromCurrentSender(message: message) ? UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1) : UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
+        }
     }
 
     func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
-        let corner: MessageStyle.TailCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
-        return .bubbleTail(corner, .curved)
-//        let configurationClosure = { (view: MessageContainerView) in}
-//        return .custom(configurationClosure)
+        switch message.data {
+        case .sticker, .system:
+            let configurationClosure = { (view: MessageContainerView) in}
+            return .custom(configurationClosure)
+        default:
+            let corner: MessageStyle.TailCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
+            return .bubbleTail(corner, .curved)
+        }
     }
     
     func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
@@ -326,6 +341,9 @@ extension ConversationViewController: MessagesDisplayDelegate {
         avatarView.set(avatar: avatar)
     }
 
+    func configureAccessoryView(_ accessoryView: UIView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
+        accessoryView.backgroundColor = UIColor.black
+    }
     // MARK: - Location Messages
 
     func annotationViewForLocation(message: MessageType, at indexPath: IndexPath, in messageCollectionView: MessagesCollectionView) -> MKAnnotationView? {
@@ -361,11 +379,37 @@ extension ConversationViewController: MessagesLayoutDelegate {
         return AvatarPosition(horizontal: .natural, vertical: .messageBottom)
     }
 
-    func messagePadding(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets {
+    func avatarSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
+        switch message.data {
+        case .system:
+            return CGSize(width: 0.0, height: 0.0)
+        default:
+            return CGSize(width: 40.0, height: 40.0)
+        }
+    }
+    
+    func accessoryPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AccessoryPosition {
         if isFromCurrentSender(message: message) {
-            return UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 4)
+            return AccessoryPosition(horizontal: .cellLeading, vertical: .messageBottom)
         } else {
-            return UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 30)
+            return AccessoryPosition(horizontal: .cellTrailing, vertical: .messageBottom)
+        }
+    }
+    
+    func accessorySize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
+        return CGSize(width: 40.0, height: 40.0)
+    }
+    
+    func messagePadding(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets {
+        switch message.data {
+        case .system:
+            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        default:
+            if isFromCurrentSender(message: message) {
+                return UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 4)
+            } else {
+                return UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 30)
+            }
         }
     }
 
@@ -418,6 +462,9 @@ extension ConversationViewController: MessageCellDelegate {
         print("Bottom label tapped")
     }
 
+    func didTapAccessory(in cell: MessageCollectionViewCell) {
+        print("Accessory tapped")
+    }
 }
 
 // MARK: - MessageLabelDelegate

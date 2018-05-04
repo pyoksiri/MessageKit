@@ -238,6 +238,8 @@ fileprivate extension MessagesCollectionViewFlowLayout {
         attributes.avatarSize = avatarSize(for: attributes)
         attributes.messageContainerPadding = messageContainerPadding(for: attributes)
         attributes.messageLabelInsets = messageLabelInsets(for: attributes)
+        attributes.accessoryPosition = accessoryPosition(for: attributes)
+        attributes.accessorySize = accessorySize(for: attributes)
         
         // MessageContainerView
         attributes.messageContainerMaxWidth = messageContainerMaxWidth(for: attributes)
@@ -275,6 +277,7 @@ fileprivate extension MessagesCollectionViewFlowLayout {
         attributes.bottomLabelFrame = intermediateAttributes.bottomLabelFrame
         attributes.avatarFrame = intermediateAttributes.avatarFrame
         attributes.messageLabelInsets = intermediateAttributes.messageLabelInsets
+        attributes.accessoryFrame = intermediateAttributes.accessoryFrame
         
         switch intermediateAttributes.message.data {
         case .emoji:
@@ -326,6 +329,22 @@ fileprivate extension MessagesCollectionViewFlowLayout {
         return messagesLayoutDelegate.avatarSize(for: attributes.message, at: attributes.indexPath, in: messagesCollectionView)
     }
     
+    func accessoryPosition(for attributes: MessageIntermediateLayoutAttributes) -> AccessoryPosition {
+        var position = messagesLayoutDelegate.accessoryPosition(for: attributes.message, at: attributes.indexPath, in: messagesCollectionView)
+        
+        switch position.horizontal {
+        case .cellTrailing, .cellLeading:
+            break
+        case .natural:
+            position.horizontal = messagesDataSource.isFromCurrentSender(message: attributes.message) ? .cellLeading : .cellTrailing
+        }
+        
+        return position
+    }
+
+    func accessorySize(for attributes: MessageIntermediateLayoutAttributes) -> CGSize {
+        return messagesLayoutDelegate.accessorySize(for: attributes.message, at: attributes.indexPath, in: messagesCollectionView)
+    }
 }
 
 // MARK: - General Label Size Calculations
@@ -401,9 +420,9 @@ private extension MessagesCollectionViewFlowLayout {
         
         switch attributes.message.data {
         case .text, .attributedText:
-            return itemWidth - attributes.avatarSize.width - attributes.messageHorizontalPadding - attributes.messageLabelHorizontalInsets
+            return itemWidth - attributes.avatarSize.width - attributes.messageHorizontalPadding - attributes.messageLabelHorizontalInsets - attributes.accessorySize.width
         default:
-            return itemWidth - attributes.avatarSize.width - attributes.messageHorizontalPadding
+            return itemWidth - attributes.avatarSize.width - attributes.messageHorizontalPadding - attributes.accessorySize.width
         }
         
     }
@@ -435,7 +454,7 @@ private extension MessagesCollectionViewFlowLayout {
             messageContainerSize = labelSize(for: text, considering: maxWidth, and: emojiLabelFont)
             messageContainerSize.width += attributes.messageLabelHorizontalInsets
             messageContainerSize.height += attributes.messageLabelVerticalInsets
-        case .photo, .video:
+        case .photo, .video, .networkPhoto:
             let width = messagesLayoutDelegate.widthForMedia(message: message, at: indexPath, with: maxWidth, in: messagesCollectionView)
             let height = messagesLayoutDelegate.heightForMedia(message: message, at: indexPath, with: maxWidth, in: messagesCollectionView)
             messageContainerSize = CGSize(width: width, height: height)
@@ -443,6 +462,12 @@ private extension MessagesCollectionViewFlowLayout {
             let width = messagesLayoutDelegate.widthForLocation(message: message, at: indexPath, with: maxWidth, in: messagesCollectionView)
             let height = messagesLayoutDelegate.heightForLocation(message: message, at: indexPath, with: maxWidth, in: messagesCollectionView)
             messageContainerSize = CGSize(width: width, height: height)
+        case .sticker:
+            messageContainerSize = CGSize(width: 200.0, height: 200.0)
+        case .audio:
+            messageContainerSize = CGSize(width: 200.0, height: 60.0)
+        case .system:
+            messageContainerSize = CGSize(width: itemWidth, height: 20.0)
         }
         
         return messageContainerSize

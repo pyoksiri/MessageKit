@@ -40,32 +40,56 @@ final class MessageIntermediateLayoutAttributes {
     var avatarPosition = AvatarPosition(horizontal: .cellLeading, vertical: .cellBottom)
     var avatarSize: CGSize = .zero
     
+    var accessoryPosition = AccessoryPosition(horizontal: .cellLeading, vertical: .messageBottom)
+    var accessorySize: CGSize = .zero
+    
     lazy var avatarFrame: CGRect = {
         
         guard avatarSize != .zero else { return .zero }
         
         var origin = CGPoint.zero
         
-        switch avatarPosition.horizontal {
-        case .cellLeading:
-            break
-        case .cellTrailing:
+        if avatarPosition.horizontal == .cellTrailing {
             origin.x = cellFrame.width - avatarSize.width
-        case .natural:
-            fatalError(MessageKitError.avatarPositionUnresolved)
         }
         
-        switch avatarPosition.vertical {
-        case .cellTop:
-            break
-        case .cellBottom:
+        let vertical = avatarPosition.vertical
+        if vertical == .cellBottom {
             origin.y = cellFrame.height - avatarSize.height
-        case .messageTop:
+        } else if vertical == .messageTop {
             origin.y = messageContainerFrame.minY
-        case .messageBottom:
+        } else if vertical == .messageBottom {
             origin.y = messageContainerFrame.maxY - avatarSize.height
-        case .messageCenter:
+        } else if vertical == .messageCenter {
             origin.y = messageContainerFrame.midY - (avatarSize.height/2)
+        }
+        
+        return CGRect(origin: origin, size: avatarSize)
+        
+    }()
+    
+    lazy var accessoryFrame: CGRect = {
+        
+        guard accessorySize != .zero else { return .zero }
+        
+        var origin = CGPoint.zero
+        
+        let horizontal = avatarPosition.horizontal
+        if horizontal == .cellTrailing {
+            origin.x = messageContainerFrame.origin.x - accessorySize.width - 2
+        } else if horizontal == .cellLeading {
+            origin.x = avatarSize.width + messageContainerSize.width + messageContainerPadding.left + 2
+        }
+        
+        let vertical = avatarPosition.vertical
+        if vertical == .cellBottom {
+            origin.y = cellFrame.height - accessorySize.height
+        } else if vertical == .messageTop {
+            origin.y = messageContainerFrame.minY
+        } else if vertical == .messageBottom {
+            origin.y = cellFrame.height - accessorySize.height - bottomLabelSize.height
+        } else if vertical == .messageCenter {
+            origin.y = messageContainerFrame.midY - (accessorySize.height/2)
         }
         
         return CGRect(origin: origin, size: avatarSize)

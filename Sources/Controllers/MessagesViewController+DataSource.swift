@@ -60,12 +60,24 @@ extension MessagesViewController: UICollectionViewDataSource {
             let cell = messagesCollectionView.dequeueReusableCell(TextMessageCell.self, for: indexPath)
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
             return cell
-        case .photo, .video:
+        case .photo, .video, .networkPhoto:
             let cell = messagesCollectionView.dequeueReusableCell(MediaMessageCell.self, for: indexPath)
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
             return cell
         case .location:
             let cell = messagesCollectionView.dequeueReusableCell(LocationMessageCell.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        case .sticker:
+            let cell = messagesCollectionView.dequeueReusableCell(StickerMessageCell.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        case .audio:
+            let cell = messagesCollectionView.dequeueReusableCell(AudioMessageCell.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        case .system:
+            let cell = messagesCollectionView.dequeueReusableCell(SystemMessageCell.self, for: indexPath)
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
             return cell
         }

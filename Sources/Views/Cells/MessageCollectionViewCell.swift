@@ -31,7 +31,8 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
     }
 
     open var avatarView = AvatarView()
-
+    open var accessoryView = UIView()
+    
     open var messageContainerView: MessageContainerView = {
         let containerView = MessageContainerView()
         containerView.clipsToBounds = true
@@ -65,6 +66,7 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
 
     open func setupSubviews() {
         contentView.addSubview(messageContainerView)
+        contentView.addSubview(accessoryView)
         contentView.addSubview(avatarView)
         contentView.addSubview(cellTopLabel)
         contentView.addSubview(cellBottomLabel)
@@ -87,6 +89,7 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
             cellTopLabel.frame = attributes.topLabelFrame
             cellBottomLabel.frame = attributes.bottomLabelFrame
             messageContainerView.frame = attributes.messageContainerFrame
+            accessoryView.frame = attributes.accessoryFrame
         }
     }
 
@@ -104,7 +107,8 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
         let messageStyle = displayDelegate.messageStyle(for: message, at: indexPath, in: messagesCollectionView)
         
         displayDelegate.configureAvatarView(avatarView, for: message, at: indexPath, in: messagesCollectionView)
-
+        displayDelegate.configureAccessoryView(accessoryView, for: message, at: indexPath, in: messagesCollectionView)
+        
         messageContainerView.backgroundColor = messageColor
         messageContainerView.style = messageStyle
 
@@ -128,6 +132,8 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
             delegate?.didTapTopLabel(in: self)
         case cellBottomLabel.frame.contains(touchLocation):
             delegate?.didTapBottomLabel(in: self)
+        case accessoryView.frame.contains(touchLocation):
+            delegate?.didTapAccessory(in: self)
         default:
             break
         }
