@@ -28,6 +28,9 @@ open class SystemMessageCell: MessageCollectionViewCell {
         messageContainerView.addSubview(messageLabel)
         messageLabel.centerInSuperview()
         messageLabel.constraint(equalTo: CGSize(width: 200, height: 24))
+        messageLabel.layer.cornerRadius = 12.0
+        messageLabel.font = UIFont.systemFont(ofSize: 12.0, weight: .semibold)
+        messageLabel.backgroundColor = UIColor.lightGray
     }
     
     open override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {

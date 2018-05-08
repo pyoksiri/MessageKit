@@ -463,7 +463,7 @@ private extension MessagesCollectionViewFlowLayout {
             let height = messagesLayoutDelegate.heightForLocation(message: message, at: indexPath, with: maxWidth, in: messagesCollectionView)
             messageContainerSize = CGSize(width: width, height: height)
         case .sticker:
-            messageContainerSize = CGSize(width: 200.0, height: 200.0)
+            messageContainerSize = CGSize(width: 160.0, height: 160.0)
         case .audio:
             messageContainerSize = CGSize(width: 200.0, height: 44.0)
         case .system:

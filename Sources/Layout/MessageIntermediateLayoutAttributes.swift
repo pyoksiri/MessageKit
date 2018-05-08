@@ -74,14 +74,14 @@ final class MessageIntermediateLayoutAttributes {
         
         var origin = CGPoint.zero
         
-        let horizontal = avatarPosition.horizontal
+        let horizontal = accessoryPosition.horizontal
         if horizontal == .cellTrailing {
-            origin.x = messageContainerFrame.origin.x - accessorySize.width - 2
+            origin.x = messageContainerFrame.origin.x - accessorySize.width - 4
         } else if horizontal == .cellLeading {
-            origin.x = avatarSize.width + messageContainerSize.width + messageContainerPadding.left + 2
+            origin.x = avatarSize.width + messageContainerSize.width + messageContainerPadding.left + 4
         }
         
-        let vertical = avatarPosition.vertical
+        let vertical = accessoryPosition.vertical
         if vertical == .cellBottom {
             origin.y = cellFrame.height - accessorySize.height
         } else if vertical == .messageTop {

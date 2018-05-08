@@ -58,18 +58,20 @@ open class MediaMessageCell: MessageCollectionViewCell {
 
     open override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
-        switch message.data {
-        case .photo(let image):
-            imageView.image = image
-            playButtonView.isHidden = true
-        case .video(_, let image):
-            imageView.image = image
-            playButtonView.isHidden = false
-        case .networkPhoto(_, let placeHolder):
-            imageView.image = placeHolder
-            playButtonView.isHidden = false
-        default:
-            break
+        DispatchQueue.main.async {
+            switch message.data {
+            case .photo(let image):
+                self.imageView.image = image
+                self.playButtonView.isHidden = true
+            case .video(_, let image):
+                self.imageView.image = image
+                self.playButtonView.isHidden = false
+            case .networkPhoto(_, let placeHolder):
+                self.imageView.image = placeHolder
+                self.playButtonView.isHidden = true
+            default:
+                break
+            }
         }
     }
 }

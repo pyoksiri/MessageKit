@@ -53,7 +53,7 @@ public enum MessageData {
     case emoji(String)
 
     // An photo from network message.
-    case networkPhoto(url: URL, placeHolder: UIImage)
+    case networkPhoto(url: String, placeHolder: UIImage)
 
     // An sticker message.
     case sticker(String)

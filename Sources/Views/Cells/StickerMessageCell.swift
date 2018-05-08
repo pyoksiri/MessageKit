@@ -7,7 +7,7 @@
 
 import UIKit
 
-let kStickerPath = kLibraryPath.appending("Stickers")
+let kStickerPath = kLibraryPath.appending("/Stickers")
 
 open class StickerMessageCell: MessageCollectionViewCell {
     
@@ -18,7 +18,7 @@ open class StickerMessageCell: MessageCollectionViewCell {
     // MARK: - Methods
     
     open func setupConstraints() {
-        imageView.fillSuperview()
+        imageView.addConstraints(messageContainerView.topAnchor, left: messageContainerView.leftAnchor, bottom: messageContainerView.bottomAnchor, right: messageContainerView.rightAnchor, topConstant: 10.0, leftConstant: 10.0, bottomConstant: 10.0, rightConstant: 10.0, widthConstant: 0.0, heightConstant: 0.0)
     }
     
     open override func setupSubviews() {
