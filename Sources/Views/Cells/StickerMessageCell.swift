@@ -27,11 +27,5 @@ open class StickerMessageCell: MessageCollectionViewCell {
     
     open override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
-        switch message.data {
-        case .sticker(let image):
-            imageView.image = image
-        default:
-            break
-        }
     }
 }

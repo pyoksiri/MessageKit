@@ -56,7 +56,7 @@ public enum MessageData {
     case networkPhoto(url: URL, placeHolder: UIImage)
 
     // An sticker message.
-    case sticker(UIImage)
+    case sticker(String)
     
     // An audio message.
     case audio(URL)
