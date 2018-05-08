@@ -7,6 +7,8 @@
 
 import UIKit
 
+let kStickerPath = kLibraryPath.appending("Stickers")
+
 open class StickerMessageCell: MessageCollectionViewCell {
     
     open override class func reuseIdentifier() -> String { return "messagekit.cell.sticker" }
@@ -27,5 +29,11 @@ open class StickerMessageCell: MessageCollectionViewCell {
     
     open override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
+        switch message.data {
+        case .sticker(let image):
+            imageView.image = UIImage.init(contentsOfFile: kStickerPath.appending("/\(image)"))
+        default:
+            break
+        }
     }
 }

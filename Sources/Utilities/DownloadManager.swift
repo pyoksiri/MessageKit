@@ -7,6 +7,7 @@
 //
 
 import UIKit
+public let kLibraryPath = NSHomeDirectory() + "/Library/Caches"
 
 class DownloadManager: NSObject {
     static let shared = DownloadManager()

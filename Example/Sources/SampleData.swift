@@ -70,7 +70,7 @@ final class SampleData {
 
     var now = Date()
 
-    let messageTypes = ["Text", "Text", "Text", "AttributedText", "Photo", "Video", "Location", "Emoji", "Sticker", "System", "Audio"]
+    let messageTypes = ["Text", "Text", "Text", "AttributedText", "Photo", "Video", "Location", "Emoji", "System", "Audio"]
 
     let attributes = ["Font1", "Font2", "Font3", "Font4", "Color", "Combo"]
 
@@ -169,8 +169,6 @@ final class SampleData {
             return MockMessage(location: locations[randomNumberLocation], sender: sender, messageId: uniqueID, date: date)
         case "Emoji":
             return MockMessage(emoji: emojis[randomNumberEmoji], sender: sender, messageId: uniqueID, date: date)
-        case "Sticker":
-            return MockMessage(sticker: #imageLiteral(resourceName: "Dan-Leonard"), sender: sender, messageId: uniqueID, date: date)
         case "System":
             return MockMessage(system: "10 JUL 2018", sender: sender, messageId: uniqueID, date: date)
         case "Audio":

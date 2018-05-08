@@ -9,7 +9,6 @@
 import UIKit
 import AVFoundation
 
-public let kLibraryPath = NSHomeDirectory() + "/Library/Caches"
 public let kContentFolderName = "/Contents/"
 public let kContentPath = kLibraryPath + kContentFolderName
 
