@@ -72,4 +72,8 @@ struct MockMessage: MessageType {
     init(system: String, sender: Sender, messageId: String, date: Date) {
         self.init(data: .system(system), sender: sender, messageId: messageId, date: date)
     }
+    
+    init(audio: String, sender: Sender, messageId: String, date: Date) {
+        self.init(data: .audio(URL.init(string: audio)!), sender: sender, messageId: messageId, date: date)
+    }
 }

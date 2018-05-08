@@ -87,6 +87,9 @@
 		C05E2CA9209C451300FDAC61 /* StickerMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05E2CA8209C451300FDAC61 /* StickerMessageCell.swift */; };
 		C05E2CAB209C46E700FDAC61 /* AudioMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05E2CAA209C46E700FDAC61 /* AudioMessageCell.swift */; };
 		C05E2CAD209C46F100FDAC61 /* SystemMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05E2CAC209C46F100FDAC61 /* SystemMessageCell.swift */; };
+		C0D96E0020A034D9003E81B9 /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D96DFF20A034D9003E81B9 /* DownloadManager.swift */; };
+		C0D96E0220A03577003E81B9 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D96E0120A03577003E81B9 /* AudioManager.swift */; };
+		C0D96E0420A054A4003E81B9 /* NotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D96E0320A054A4003E81B9 /* NotificationName.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -196,6 +199,9 @@
 		C05E2CA8209C451300FDAC61 /* StickerMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerMessageCell.swift; sourceTree = "<group>"; };
 		C05E2CAA209C46E700FDAC61 /* AudioMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMessageCell.swift; sourceTree = "<group>"; };
 		C05E2CAC209C46F100FDAC61 /* SystemMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemMessageCell.swift; sourceTree = "<group>"; };
+		C0D96DFF20A034D9003E81B9 /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
+		C0D96E0120A03577003E81B9 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
+		C0D96E0320A054A4003E81B9 /* NotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationName.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -276,6 +282,7 @@
 		88916B3C1CF0DF5100469F91 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				C0D96DFE20A034C9003E81B9 /* Utilities */,
 				B01E2DCC1F5BA34700E4FA1C /* Assets */,
 				B096439D1F295DC3004D0129 /* Layout */,
 				B09643991F295D58004D0129 /* Models */,
@@ -469,6 +476,16 @@
 			path = Supporting;
 			sourceTree = "<group>";
 		};
+		C0D96DFE20A034C9003E81B9 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				C0D96DFF20A034D9003E81B9 /* DownloadManager.swift */,
+				C0D96E0120A03577003E81B9 /* AudioManager.swift */,
+				C0D96E0320A054A4003E81B9 /* NotificationName.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -604,11 +621,13 @@
 				B7A03F5B1F8669CA006AEF79 /* MessageType.swift in Sources */,
 				B7A03F6F1F8669EB006AEF79 /* String+Extensions.swift in Sources */,
 				B7A03F491F86694F006AEF79 /* InputBarItem.swift in Sources */,
+				C0D96E0020A034D9003E81B9 /* DownloadManager.swift in Sources */,
 				B7A03F601F8669CA006AEF79 /* MessagesDisplayDelegate.swift in Sources */,
 				B7A03F5C1F8669CA006AEF79 /* MessageCellDelegate.swift in Sources */,
 				1FF377A420087C82004FD648 /* MessageKitError.swift in Sources */,
 				B7A03F4A1F86694F006AEF79 /* MessageInputBar.swift in Sources */,
 				B006FA021F99DE2100509C46 /* MessageIntermediateLayoutAttributes.swift in Sources */,
+				C0D96E0420A054A4003E81B9 /* NotificationName.swift in Sources */,
 				B7A03F4B1F86694F006AEF79 /* MessageContainerView.swift in Sources */,
 				B7A03F281F866895006AEF79 /* LocationMessageSnapshotOptions.swift in Sources */,
 				B7A03F481F86694F006AEF79 /* InputTextView.swift in Sources */,
@@ -628,6 +647,7 @@
 				8962AC9A1F87ABB20030B058 /* MockMessagesDataSource.swift in Sources */,
 				B7A03F6D1F8669EB006AEF79 /* Bundle+Extensions.swift in Sources */,
 				B7A03F6A1F8669EB006AEF79 /* UICollectionView+Extensions.swift in Sources */,
+				C0D96E0220A03577003E81B9 /* AudioManager.swift in Sources */,
 				8962AC9C1F87ABC60030B058 /* MockMessage.swift in Sources */,
 				B7A03F611F8669CA006AEF79 /* MessagesDataSource.swift in Sources */,
 				B7A03F6E1F8669EB006AEF79 /* NSAttributedString+Extensions.swift in Sources */,

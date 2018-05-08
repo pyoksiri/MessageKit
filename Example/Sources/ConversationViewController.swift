@@ -451,6 +451,10 @@ extension ConversationViewController: MessageCellDelegate {
     }
 
     func didTapMessage(in cell: MessageCollectionViewCell) {
+        if cell is AudioMessageCell {
+            let audioCell = cell as! AudioMessageCell
+            audioCell.playAction()
+        }
         print("Message tapped")
     }
 

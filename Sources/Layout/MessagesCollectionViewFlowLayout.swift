@@ -465,7 +465,7 @@ private extension MessagesCollectionViewFlowLayout {
         case .sticker:
             messageContainerSize = CGSize(width: 200.0, height: 200.0)
         case .audio:
-            messageContainerSize = CGSize(width: 200.0, height: 60.0)
+            messageContainerSize = CGSize(width: 200.0, height: 44.0)
         case .system:
             messageContainerSize = CGSize(width: itemWidth, height: 20.0)
         }

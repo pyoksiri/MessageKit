@@ -36,9 +36,13 @@ open class MediaMessageCell: MessageCollectionViewCell {
     }()
 
     open var imageView = UIImageView()
-
-    // MARK: - Methods
-
+    
+    open var messageId: String! {
+        didSet {
+            
+        }
+    }
+    
     open func setupConstraints() {
         imageView.fillSuperview()
         playButtonView.centerInSuperview()
