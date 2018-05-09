@@ -83,6 +83,12 @@
 		B7A03F731F866A06006AEF79 /* MessageKit+Availability.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F701F866A06006AEF79 /* MessageKit+Availability.swift */; };
 		B7A03F751F866A06006AEF79 /* MessageKit.h in Headers */ = {isa = PBXBuildFile; fileRef = B7A03F721F866A06006AEF79 /* MessageKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B7A03F7B1F866B85006AEF79 /* MessageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F7A1F866B85006AEF79 /* MessageCollectionViewCell.swift */; };
+		C02AC5E920A2D13200B9D430 /* UICircularProgressRingStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02AC5E420A2D13200B9D430 /* UICircularProgressRingStyle.swift */; };
+		C02AC5EA20A2D13200B9D430 /* UICircularProgressRingLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02AC5E520A2D13200B9D430 /* UICircularProgressRingLayer.swift */; };
+		C02AC5EB20A2D13200B9D430 /* UICircularProgressRingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02AC5E620A2D13200B9D430 /* UICircularProgressRingDelegate.swift */; };
+		C02AC5EC20A2D13200B9D430 /* UICircularProgressRingGradientPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02AC5E720A2D13200B9D430 /* UICircularProgressRingGradientPosition.swift */; };
+		C02AC5ED20A2D13200B9D430 /* UICircularProgressRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02AC5E820A2D13200B9D430 /* UICircularProgressRingView.swift */; };
+		C02AC5EF20A2DFB500B9D430 /* UIPandingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02AC5EE20A2DFB500B9D430 /* UIPandingLabel.swift */; };
 		C02D2093209BB47700D3D993 /* AccessoryPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02D2092209BB47700D3D993 /* AccessoryPosition.swift */; };
 		C05E2CA9209C451300FDAC61 /* StickerMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05E2CA8209C451300FDAC61 /* StickerMessageCell.swift */; };
 		C05E2CAB209C46E700FDAC61 /* AudioMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05E2CAA209C46E700FDAC61 /* AudioMessageCell.swift */; };
@@ -195,6 +201,12 @@
 		B7A03F711F866A06006AEF79 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B7A03F721F866A06006AEF79 /* MessageKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageKit.h; sourceTree = "<group>"; };
 		B7A03F7A1F866B85006AEF79 /* MessageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCollectionViewCell.swift; sourceTree = "<group>"; };
+		C02AC5E420A2D13200B9D430 /* UICircularProgressRingStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICircularProgressRingStyle.swift; sourceTree = "<group>"; };
+		C02AC5E520A2D13200B9D430 /* UICircularProgressRingLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICircularProgressRingLayer.swift; sourceTree = "<group>"; };
+		C02AC5E620A2D13200B9D430 /* UICircularProgressRingDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICircularProgressRingDelegate.swift; sourceTree = "<group>"; };
+		C02AC5E720A2D13200B9D430 /* UICircularProgressRingGradientPosition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICircularProgressRingGradientPosition.swift; sourceTree = "<group>"; };
+		C02AC5E820A2D13200B9D430 /* UICircularProgressRingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICircularProgressRingView.swift; sourceTree = "<group>"; };
+		C02AC5EE20A2DFB500B9D430 /* UIPandingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIPandingLabel.swift; sourceTree = "<group>"; };
 		C02D2092209BB47700D3D993 /* AccessoryPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryPosition.swift; sourceTree = "<group>"; };
 		C05E2CA8209C451300FDAC61 /* StickerMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerMessageCell.swift; sourceTree = "<group>"; };
 		C05E2CAA209C46E700FDAC61 /* AudioMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMessageCell.swift; sourceTree = "<group>"; };
@@ -282,6 +294,7 @@
 		88916B3C1CF0DF5100469F91 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				C02AC5E320A2D13200B9D430 /* Externals */,
 				C0D96DFE20A034C9003E81B9 /* Utilities */,
 				B01E2DCC1F5BA34700E4FA1C /* Assets */,
 				B096439D1F295DC3004D0129 /* Layout */,
@@ -476,6 +489,19 @@
 			path = Supporting;
 			sourceTree = "<group>";
 		};
+		C02AC5E320A2D13200B9D430 /* Externals */ = {
+			isa = PBXGroup;
+			children = (
+				C02AC5E420A2D13200B9D430 /* UICircularProgressRingStyle.swift */,
+				C02AC5E520A2D13200B9D430 /* UICircularProgressRingLayer.swift */,
+				C02AC5E620A2D13200B9D430 /* UICircularProgressRingDelegate.swift */,
+				C02AC5E720A2D13200B9D430 /* UICircularProgressRingGradientPosition.swift */,
+				C02AC5E820A2D13200B9D430 /* UICircularProgressRingView.swift */,
+				C02AC5EE20A2DFB500B9D430 /* UIPandingLabel.swift */,
+			);
+			path = Externals;
+			sourceTree = "<group>";
+		};
 		C0D96DFE20A034C9003E81B9 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -616,9 +642,11 @@
 			files = (
 				B7A03F3C1F866946006AEF79 /* LocationMessageCell.swift in Sources */,
 				1FF377AA20087D78004FD648 /* MessagesViewController+Menu.swift in Sources */,
+				C02AC5EC20A2D13200B9D430 /* UICircularProgressRingGradientPosition.swift in Sources */,
 				38C57C7C1F9AE4890043CC03 /* InputStackView.swift in Sources */,
 				C02D2093209BB47700D3D993 /* AccessoryPosition.swift in Sources */,
 				B7A03F5B1F8669CA006AEF79 /* MessageType.swift in Sources */,
+				C02AC5EF20A2DFB500B9D430 /* UIPandingLabel.swift in Sources */,
 				B7A03F6F1F8669EB006AEF79 /* String+Extensions.swift in Sources */,
 				B7A03F491F86694F006AEF79 /* InputBarItem.swift in Sources */,
 				C0D96E0020A034D9003E81B9 /* DownloadManager.swift in Sources */,
@@ -644,8 +672,10 @@
 				B7A03F6B1F8669EB006AEF79 /* UIColor+Extensions.swift in Sources */,
 				B7A03F5E1F8669CA006AEF79 /* MessagesLayoutDelegate.swift in Sources */,
 				B7A03F261F866895006AEF79 /* MessageKitDateFormatter.swift in Sources */,
+				C02AC5E920A2D13200B9D430 /* UICircularProgressRingStyle.swift in Sources */,
 				8962AC9A1F87ABB20030B058 /* MockMessagesDataSource.swift in Sources */,
 				B7A03F6D1F8669EB006AEF79 /* Bundle+Extensions.swift in Sources */,
+				C02AC5EA20A2D13200B9D430 /* UICircularProgressRingLayer.swift in Sources */,
 				B7A03F6A1F8669EB006AEF79 /* UICollectionView+Extensions.swift in Sources */,
 				C0D96E0220A03577003E81B9 /* AudioManager.swift in Sources */,
 				8962AC9C1F87ABC60030B058 /* MockMessage.swift in Sources */,
@@ -658,6 +688,7 @@
 				B7A03F4F1F86697C006AEF79 /* MessagesViewController.swift in Sources */,
 				B7A03F251F866895006AEF79 /* NSConstraintLayoutSet.swift in Sources */,
 				B7A03F341F866940006AEF79 /* MessageFooterView.swift in Sources */,
+				C02AC5EB20A2D13200B9D430 /* UICircularProgressRingDelegate.swift in Sources */,
 				B7A03F621F8669CA006AEF79 /* MessageInputBarDelegate.swift in Sources */,
 				0EE91E661FDEC888005420A2 /* CGRect+Extensions.swift in Sources */,
 				B7A03F181F86682C006AEF79 /* MessagesCollectionViewFlowLayout.swift in Sources */,
@@ -669,6 +700,7 @@
 				C05E2CAB209C46E700FDAC61 /* AudioMessageCell.swift in Sources */,
 				B7A03F2D1F866895006AEF79 /* LabelAlignment.swift in Sources */,
 				38C57C791F9AE3E50043CC03 /* SeparatorLine.swift in Sources */,
+				C02AC5ED20A2D13200B9D430 /* UICircularProgressRingView.swift in Sources */,
 				B7A03F2C1F866895006AEF79 /* DetectorType.swift in Sources */,
 				1FF377A820087D56004FD648 /* MessagesViewController+Delegate.swift in Sources */,
 				B7A03F271F866895006AEF79 /* Avatar.swift in Sources */,

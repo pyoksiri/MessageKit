@@ -35,11 +35,36 @@ open class MediaMessageCell: MessageCollectionViewCell {
         return playButtonView
     }()
 
+    open override func prepareForReuse() {
+        super.prepareForReuse()
+        if let messageId = messageId {
+            NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: kDidUpdatePhotoMessageNotification.rawValue + messageId), object: nil)
+        }
+    }
+    
+    open lazy var progressView: UICircularProgressRingView = {
+        let progressView = UICircularProgressRingView()
+        progressView.fontColor = UIColor.white
+        progressView.font = UIFont.systemFont(ofSize: 12.0, weight: .medium)
+        progressView.innerRingColor = UIColor.white
+        progressView.innerRingWidth = 2.0
+        progressView.outerRingColor = UIColor.lightGray.withAlphaComponent(0.25)
+        progressView.outerRingWidth = 1.0
+        return progressView
+    }()
+    
+    open lazy var overlayView: UIView = {
+        let overlayView = UIView()
+        overlayView.backgroundColor = UIColor.black
+        overlayView.alpha = 0.25
+        return overlayView
+    }()
+    
     open var imageView = UIImageView()
     
     open var messageId: String! {
         didSet {
-            
+            NotificationCenter.default.addObserver(self, selector: #selector(didUpdatePhotoMessage(notification:)), name: NSNotification.Name(rawValue: kDidUpdatePhotoMessageNotification.rawValue + messageId), object: nil)
         }
     }
     
@@ -47,31 +72,54 @@ open class MediaMessageCell: MessageCollectionViewCell {
         imageView.fillSuperview()
         playButtonView.centerInSuperview()
         playButtonView.constraint(equalTo: CGSize(width: 35, height: 35))
+        progressView.centerInSuperview()
+        progressView.constraint(equalTo: CGSize(width: 40, height: 40))
+        overlayView.fillSuperview()
     }
 
     open override func setupSubviews() {
         super.setupSubviews()
         messageContainerView.addSubview(imageView)
+        messageContainerView.addSubview(overlayView)
         messageContainerView.addSubview(playButtonView)
+        messageContainerView.addSubview(progressView)
+        self.playButtonView.isHidden = true
+        self.progressView.isHidden = true
+        self.overlayView.isHidden = true
         setupConstraints()
     }
 
     open override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
         DispatchQueue.main.async {
+            self.messageId = message.messageId
+            
             switch message.data {
             case .photo(let image):
                 self.imageView.image = image
+                self.overlayView.isHidden = false
                 self.playButtonView.isHidden = true
+                self.progressView.isHidden = false
             case .video(_, let image):
                 self.imageView.image = image
+                self.overlayView.isHidden = false
                 self.playButtonView.isHidden = false
+                self.progressView.isHidden = false
             case .networkPhoto(_, let placeHolder):
                 self.imageView.image = placeHolder
+                self.overlayView.isHidden = true
                 self.playButtonView.isHidden = true
+                self.progressView.isHidden = true
             default:
                 break
             }
+        }
+    }
+    
+    @objc func didUpdatePhotoMessage(notification: Notification) {
+        if let progress = notification.object as? Progress {
+            let progressValue = (Double(progress.completedUnitCount) / Double(progress.totalUnitCount)) * 100.0
+            progressView.setProgress(to: CGFloat(progressValue), duration: 0.25)
         }
     }
 }

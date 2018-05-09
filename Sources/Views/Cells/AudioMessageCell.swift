@@ -45,12 +45,19 @@ open class AudioMessageCell: MessageCollectionViewCell {
     
     open var messageId: String! {
         didSet {
-            NotificationCenter.default.addObserver(self, selector: #selector(didUpdateAutioMessage(notification:)), name: NSNotification.Name(rawValue: kDidUpdateAudioMessageNotification.rawValue + messageId), object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(didUpdateAudioMessage(notification:)), name: NSNotification.Name(rawValue: kDidUpdateAudioMessageNotification.rawValue + messageId), object: nil)
         }
     }
     
     var baseURL: URL!
     // MARK: - Methods
+    
+    open override func prepareForReuse() {
+        super.prepareForReuse()
+        if let messageId = messageId {
+            NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: kDidUpdateAudioMessageNotification.rawValue + messageId), object: nil)
+        }
+    }
     
     open func setupConstraints() {
         playButton.addConstraints(messageContainerView.topAnchor, left: messageContainerView.leftAnchor, bottom: nil, right: nil, topConstant: 10, leftConstant: 10.0, bottomConstant: 0, rightConstant: 0, widthConstant: 24.0, heightConstant: 24.0)
@@ -78,7 +85,7 @@ open class AudioMessageCell: MessageCollectionViewCell {
         }
     }
     
-    @objc func didUpdateAutioMessage(notification: Notification) {
+    @objc func didUpdateAudioMessage(notification: Notification) {
         if notification.object is String {
             let audioStatus = notification.object as? String
             DispatchQueue.main.async {
