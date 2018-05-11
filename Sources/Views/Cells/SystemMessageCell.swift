@@ -29,8 +29,6 @@ open class SystemMessageCell: MessageCollectionViewCell {
         messageLabel.centerInSuperview()
         messageLabel.font = UIFont.systemFont(ofSize: 12.0, weight: .semibold)
         messageLabel.backgroundColor = UIColor.lightGray.withAlphaComponent(0.25)
-        messageLabel.layer.cornerRadius = 12.0
-        messageLabel.layer.masksToBounds = true
     }
     
     open override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
