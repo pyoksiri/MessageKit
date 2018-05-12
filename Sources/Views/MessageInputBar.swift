@@ -496,9 +496,9 @@ open class MessageInputBar: UIView {
     /// - Returns: Max Height
     open func calculateMaxTextViewHeight() -> CGFloat {
         if traitCollection.verticalSizeClass == .regular {
-            return (UIScreen.main.bounds.height / 3).rounded(.down)
+            return (UIScreen.main.bounds.height / 5).rounded(.down)
         }
-        return (UIScreen.main.bounds.height / 5).rounded(.down)
+        return (UIScreen.main.bounds.height / 6).rounded(.down)
     }
     
     /// Layout the given InputStackView's

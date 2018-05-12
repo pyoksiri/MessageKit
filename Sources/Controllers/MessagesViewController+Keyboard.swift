@@ -56,7 +56,11 @@ extension MessagesViewController {
 
         if (keyboardEndFrame.origin.y + keyboardEndFrame.size.height) > UIScreen.main.bounds.height {
             // Hardware keyboard is found
-            messageCollectionViewBottomInset = view.frame.size.height - keyboardEndFrame.origin.y - iPhoneXBottomInset
+            if view.frame.size.height - keyboardEndFrame.origin.y == 0 {
+
+            } else {
+                messageCollectionViewBottomInset = view.frame.size.height - keyboardEndFrame.origin.y - iPhoneXBottomInset
+            }
         } else {
             //Software keyboard is found
             let afterBottomInset = keyboardEndFrame.height > keyboardOffsetFrame.height ? (keyboardEndFrame.height - iPhoneXBottomInset) : keyboardOffsetFrame.height
@@ -87,7 +91,9 @@ extension MessagesViewController {
     // MARK: - Helpers
 
     var keyboardOffsetFrame: CGRect {
-        guard let inputFrame = inputAccessoryView?.frame else { return .zero }
+        guard let inputFrame = inputAccessoryView?.frame else {
+            return .zero
+        }
         return CGRect(origin: inputFrame.origin, size: CGSize(width: inputFrame.width, height: inputFrame.height - iPhoneXBottomInset))
     }
 
