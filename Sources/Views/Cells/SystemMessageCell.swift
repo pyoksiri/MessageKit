@@ -26,6 +26,7 @@ open class SystemMessageCell: MessageCollectionViewCell {
         super.setupSubviews()
         messageLabel.textAlignment = .center
         messageContainerView.addSubview(messageLabel)
+        messageLabel.addConstraints(nil, left: nil, bottom: nil, right: nil, topConstant: 0.0, leftConstant: 0.0, bottomConstant: 0.0, rightConstant: 0.0, widthConstant: 0.0, heightConstant: 24.0)
         messageLabel.centerInSuperview()
         messageLabel.font = UIFont.systemFont(ofSize: 12.0, weight: .semibold)
         messageLabel.backgroundColor = UIColor.lightGray.withAlphaComponent(0.25)

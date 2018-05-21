@@ -37,8 +37,15 @@ open class MediaMessageCell: MessageCollectionViewCell {
 
     open override func prepareForReuse() {
         super.prepareForReuse()
-        if let messageId = messageId {
-            NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: kDidUpdatePhotoMessageNotification.rawValue + messageId), object: nil)
+        if let message = message {
+            switch message.data {
+            case .photo(_), .networkPhoto(_):
+                NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: kDidUpdatePhotoMessageNotification.rawValue + message.messageId), object: nil)
+            case .video(_, _):
+                NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: kDidUpdateVideoMessageNotification.rawValue + message.messageId), object: nil)
+            default:
+                break
+            }
         }
     }
     
@@ -62,9 +69,16 @@ open class MediaMessageCell: MessageCollectionViewCell {
     
     open var imageView = UIImageView()
     
-    open var messageId: String! {
+    open var message: MessageType! {
         didSet {
-            NotificationCenter.default.addObserver(self, selector: #selector(didUpdatePhotoMessage(notification:)), name: NSNotification.Name(rawValue: kDidUpdatePhotoMessageNotification.rawValue + messageId), object: nil)
+            switch message.data {
+            case .photo(_), .networkPhoto(_):
+                NotificationCenter.default.addObserver(self, selector: #selector(didUpdatePhotoMessage(notification:)), name: NSNotification.Name(rawValue: kDidUpdatePhotoMessageNotification.rawValue + message.messageId), object: nil)
+            case .video(_, _):
+                NotificationCenter.default.addObserver(self, selector: #selector(didUpdateVideoMessage(notification:)), name: NSNotification.Name(rawValue: kDidUpdateVideoMessageNotification.rawValue + message.messageId), object: nil)
+            default:
+                break
+            }
         }
     }
     
@@ -92,8 +106,7 @@ open class MediaMessageCell: MessageCollectionViewCell {
     open override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
         DispatchQueue.main.async {
-            self.messageId = message.messageId
-            
+            self.message = message
             switch message.data {
             case .photo(let image):
                 self.imageView.image = image
@@ -103,8 +116,8 @@ open class MediaMessageCell: MessageCollectionViewCell {
             case .video(_, _):
                 self.overlayView.isHidden = false
                 self.playButtonView.isHidden = false
-                self.progressView.isHidden = false
-            case .networkPhoto(_, _):
+                self.progressView.isHidden = true
+            case .networkPhoto(_):
                 self.overlayView.isHidden = true
                 self.playButtonView.isHidden = true
                 self.progressView.isHidden = true
@@ -118,6 +131,20 @@ open class MediaMessageCell: MessageCollectionViewCell {
         if let progress = notification.object as? Progress {
             let progressValue = (Double(progress.completedUnitCount) / Double(progress.totalUnitCount)) * 100.0
             progressView.setProgress(to: CGFloat(progressValue), duration: 0.25)
+        }
+    }
+    
+    @objc func didUpdateVideoMessage(notification: Notification) {
+        if let progress = notification.object as? Progress {
+            let progressValue = (Double(progress.completedUnitCount) / Double(progress.totalUnitCount)) * 100.0
+            progressView.setProgress(to: CGFloat(progressValue), duration: 0.25)
+            if progressValue < 100.0 {
+                self.progressView.isHidden = false
+                self.playButtonView.isHidden = true
+            } else {
+                self.progressView.isHidden = true
+                self.playButtonView.isHidden = false
+            }
         }
     }
 }

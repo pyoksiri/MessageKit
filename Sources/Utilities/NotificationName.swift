@@ -9,5 +9,5 @@
 import UIKit
 
 public let kDidUpdateAudioMessageNotification = NSNotification.Name(rawValue: "didUpdateAudioMessage")
-
+public let kDidUpdateVideoMessageNotification = NSNotification.Name(rawValue: "didUpdateVideoMessage")
 public let kDidUpdatePhotoMessageNotification = NSNotification.Name(rawValue: "didUpdatePhotoMessage")
