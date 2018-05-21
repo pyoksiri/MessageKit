@@ -100,13 +100,11 @@ open class MediaMessageCell: MessageCollectionViewCell {
                 self.overlayView.isHidden = false
                 self.playButtonView.isHidden = true
                 self.progressView.isHidden = false
-            case .video(_, let image):
-                self.imageView.image = image
+            case .video(_, _):
                 self.overlayView.isHidden = false
                 self.playButtonView.isHidden = false
                 self.progressView.isHidden = false
-            case .networkPhoto(_, let placeHolder):
-                self.imageView.image = placeHolder
+            case .networkPhoto(_, _):
                 self.overlayView.isHidden = true
                 self.playButtonView.isHidden = true
                 self.progressView.isHidden = true

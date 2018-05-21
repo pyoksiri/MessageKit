@@ -166,6 +166,9 @@ public protocol MessagesDisplayDelegate: AnyObject {
     func animationBlockForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> ((UIImageView) -> Void)?
     
     func configureAccessoryView(_ accessoryView: UIView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView)
+    
+    func configureCell(_ cell: MessageCollectionViewCell, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView)
+
 }
 
 public extension MessagesDisplayDelegate {
@@ -212,6 +215,10 @@ public extension MessagesDisplayDelegate {
     }
 
     func configureAccessoryView(_ accessoryView: UIView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
+    }
+    
+    func configureCell(_ cell: MessageCollectionViewCell, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
+        
     }
     // MARK: - Text Messages Defaults
 

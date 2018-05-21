@@ -117,6 +117,8 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
 
         cellTopLabel.attributedText = topText
         cellBottomLabel.attributedText = bottomText
+        
+        displayDelegate.configureCell(self, for: message, at: indexPath, in: messagesCollectionView)
     }
 
     /// Handle tap gesture on contentView and its subviews like messageContainerView, cellTopLabel, cellBottomLabel, avatarView ....

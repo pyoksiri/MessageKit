@@ -44,7 +44,7 @@ public enum MessageData {
     case photo(UIImage)
 
     /// A video message.
-    case video(file: URL, thumbnail: UIImage)
+    case video(file: URL, image: String)
 
     /// A location message.
     case location(CLLocation)
