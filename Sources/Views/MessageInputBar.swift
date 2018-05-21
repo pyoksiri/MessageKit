@@ -335,6 +335,14 @@ open class MessageInputBar: UIView {
         setStackViewItems([sendButton], forStack: .right, animated: false)
     }
     
+    @objc public func setHiddenBar() {
+        setStackViewItems([], forStack: .right, animated: false)
+        setStackViewItems([], forStack: .left, animated: false)
+        contentView.isHidden = true
+        separatorLine.isHidden = true
+        deactivateConstraints()
+    }
+    
     /// Sets up the initial constraints of each subview
     private func setupConstraints() {
         
