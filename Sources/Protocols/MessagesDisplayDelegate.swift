@@ -62,7 +62,7 @@ public protocol MessagesDisplayDelegate: AnyObject {
     ///   - messagesCollectionView: The `MessagesCollectionView` in which this header will be displayed.
     ///
     /// The default value returned by this method is a `MessageDateHeaderView`.
-    func messageHeaderView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageHeaderView
+    func messageHeaderView(for indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageReusableView
 
     /// Used by the `MessageLayoutDelegate` method `headerViewSize(_:_:_:)` to determine if a header should be displayed.
     /// This method checks `MessageCollectionView`'s `showsDateHeaderAfterTimeInterval` property and returns true if
@@ -82,7 +82,7 @@ public protocol MessagesDisplayDelegate: AnyObject {
     ///   - messagesCollectionView: The `MessagesCollectionView` in which this footer will be displayed.
     ///
     /// The default value returned by this method is a `MessageFooterView`.
-    func messageFooterView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageFooterView
+    func messageFooterView(for message: MessageType, indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageReusableView
     
     /// Configure `AvatarView`‘s image.
     ///
@@ -190,10 +190,8 @@ public extension MessagesDisplayDelegate {
         }
     }
     
-    func messageHeaderView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageHeaderView {
-        let header = messagesCollectionView.dequeueReusableHeaderView(MessageDateHeaderView.self, for: indexPath)
-        header.dateLabel.text = MessageKitDateFormatter.shared.string(from: message.sentDate)
-        return header
+    func messageHeaderView(for indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageReusableView {
+        return messagesCollectionView.dequeueReusableHeaderView(MessageReusableView.self, for: indexPath)
     }
 
     func shouldDisplayHeader(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Bool {
@@ -206,8 +204,8 @@ public extension MessagesDisplayDelegate {
         return timeIntervalSinceLastMessage >= messagesCollectionView.showsDateHeaderAfterTimeInterval
     }
 
-    func messageFooterView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageFooterView {
-        return messagesCollectionView.dequeueReusableFooterView(MessageFooterView.self, for: indexPath)
+    func messageFooterView(for message: MessageType, indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageReusableView {
+        return messagesCollectionView.dequeueReusableFooterView(MessageReusableView.self, for: indexPath)
     }
     
     func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {

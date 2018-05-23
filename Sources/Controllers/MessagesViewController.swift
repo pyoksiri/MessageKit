@@ -133,7 +133,6 @@ open class MessagesViewController: UIViewController {
         messagesCollectionView.register(StickerMessageCell.self)
         messagesCollectionView.register(SystemMessageCell.self)
         messagesCollectionView.register(AudioMessageCell.self)
-
         messagesCollectionView.register(MessageFooterView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter)
         messagesCollectionView.register(MessageHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader)
         messagesCollectionView.register(MessageDateHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader)

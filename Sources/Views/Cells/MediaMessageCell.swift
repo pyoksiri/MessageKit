@@ -69,19 +69,6 @@ open class MediaMessageCell: MessageCollectionViewCell {
     
     open var imageView = UIImageView()
     
-    open var message: MessageType! {
-        didSet {
-            switch message.data {
-            case .photo(_), .networkPhoto(_):
-                NotificationCenter.default.addObserver(self, selector: #selector(didUpdatePhotoMessage(notification:)), name: NSNotification.Name(rawValue: kDidUpdatePhotoMessageNotification.rawValue + message.messageId), object: nil)
-            case .video(_, _):
-                NotificationCenter.default.addObserver(self, selector: #selector(didUpdateVideoMessage(notification:)), name: NSNotification.Name(rawValue: kDidUpdateVideoMessageNotification.rawValue + message.messageId), object: nil)
-            default:
-                break
-            }
-        }
-    }
-    
     open func setupConstraints() {
         imageView.fillSuperview()
         playButtonView.centerInSuperview()
@@ -127,14 +114,14 @@ open class MediaMessageCell: MessageCollectionViewCell {
         }
     }
     
-    @objc func didUpdatePhotoMessage(notification: Notification) {
+    @objc override open func didUpdatePhotoMessage(notification: Notification) {
         if let progress = notification.object as? Progress {
             let progressValue = (Double(progress.completedUnitCount) / Double(progress.totalUnitCount)) * 100.0
             progressView.setProgress(to: CGFloat(progressValue), duration: 0.25)
         }
     }
     
-    @objc func didUpdateVideoMessage(notification: Notification) {
+    @objc override open func didUpdateVideoMessage(notification: Notification) {
         if let progress = notification.object as? Progress {
             let progressValue = (Double(progress.completedUnitCount) / Double(progress.totalUnitCount)) * 100.0
             progressView.setProgress(to: CGFloat(progressValue), duration: 0.25)

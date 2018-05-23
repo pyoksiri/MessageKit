@@ -101,9 +101,9 @@ extension MessagesViewController: UICollectionViewDataSource {
 
         switch kind {
         case UICollectionElementKindSectionHeader:
-            return displayDelegate.messageHeaderView(for: message, at: indexPath, in: messagesCollectionView)
+            return displayDelegate.messageHeaderView(for: indexPath, in: messagesCollectionView)
         case UICollectionElementKindSectionFooter:
-            return displayDelegate.messageFooterView(for: message, at: indexPath, in: messagesCollectionView)
+            return displayDelegate.messageFooterView(for: message, indexPath: indexPath, in: messagesCollectionView)
         default:
             fatalError(MessageKitError.unrecognizedSectionKind)
         }

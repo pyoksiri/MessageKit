@@ -282,7 +282,7 @@ fileprivate extension MessagesCollectionViewFlowLayout {
         switch intermediateAttributes.message.data {
         case .emoji:
             attributes.messageLabelFont = emojiLabelFont
-        case .text:
+        case .text(let text):
             attributes.messageLabelFont = messageLabelFont
         case .attributedText(let text):
             guard !text.string.isEmpty else { return }
@@ -445,7 +445,15 @@ private extension MessagesCollectionViewFlowLayout {
         case .text(let text):
             messageContainerSize = labelSize(for: text, considering: maxWidth, and: messageLabelFont)
             messageContainerSize.width += attributes.messageLabelHorizontalInsets
-            messageContainerSize.height += attributes.messageLabelVerticalInsets
+            let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+            let matches = detector.matches(in: text, options: [], range: NSRange(location: 0, length: text.utf16.count))
+            var links = [String]()
+            for match in matches {
+                guard let range = Range(match.range, in: text) else { continue }
+                let url = text[range]
+                links.append(String(url))
+            }
+            messageContainerSize.height += attributes.messageLabelVerticalInsets + CGFloat(links.count * 60)
         case .attributedText(let text):
             messageContainerSize = labelSize(for: text, considering: maxWidth)
             messageContainerSize.width += attributes.messageLabelHorizontalInsets

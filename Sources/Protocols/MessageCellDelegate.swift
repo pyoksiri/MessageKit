@@ -69,6 +69,8 @@ public protocol MessageCellDelegate: MessageLabelDelegate {
 
     func didTapAccessory(in cell: MessageCollectionViewCell)
 
+    func didTapCustom(in cell: MessageCollectionViewCell, point: CGPoint)
+
 }
 
 public extension MessageCellDelegate {
@@ -82,4 +84,6 @@ public extension MessageCellDelegate {
     func didTapTopLabel(in cell: MessageCollectionViewCell) {}
 
     func didTapAccessory(in cell: MessageCollectionViewCell) {}
+    
+    func didTapCustom(in cell: MessageCollectionViewCell, point: CGPoint) {}
 }

@@ -28,8 +28,6 @@ open class TextMessageCell: MessageCollectionViewCell {
 
     open override class func reuseIdentifier() -> String { return "messagekit.cell.text" }
 
-    // MARK: - Properties
-
     open override weak var delegate: MessageCellDelegate? {
         didSet {
             messageLabel.delegate = delegate
@@ -38,6 +36,12 @@ open class TextMessageCell: MessageCollectionViewCell {
 
     open var messageLabel = MessageLabel()
 
+    open var customView: UIView = {
+        let view = UIView()
+        view.clipsToBounds = true
+        view.layer.masksToBounds = true
+        return view
+    }()
     // MARK: - Methods
 
     open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
@@ -58,9 +62,12 @@ open class TextMessageCell: MessageCollectionViewCell {
     open override func setupSubviews() {
         super.setupSubviews()
         messageContainerView.addSubview(messageLabel)
+        messageContainerView.addSubview(customView)
     }
 
     open override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
+        self.message = message
+        
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
 
         guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
@@ -95,5 +102,16 @@ open class TextMessageCell: MessageCollectionViewCell {
     /// Handle `ContentView`'s tap gesture, return false when `ContentView` don't needs to handle gesture
     open override func cellContentView(canHandle touchPoint: CGPoint) -> Bool {
         return messageLabel.handleGesture(touchPoint)
+    }
+    
+    open override func cellCustomView(canHandle touchPoint: CGPoint) -> Bool {
+        var point = touchPoint
+        point.y = point.y - customView.frame.origin.y
+        if customView.point(inside: point, with: nil) {
+            delegate?.didTapCustom(in: self, point: point)
+            return true
+        } else {
+            return false
+        }
     }
 }

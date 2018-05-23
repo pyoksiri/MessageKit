@@ -33,6 +33,19 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
     open var avatarView = AvatarView()
     open var accessoryView = UIView()
     
+    open var message: MessageType! {
+        didSet {
+            switch message.data {
+            case .photo(_), .networkPhoto(_):
+                NotificationCenter.default.addObserver(self, selector: #selector(didUpdatePhotoMessage(notification:)), name: NSNotification.Name(rawValue: kDidUpdatePhotoMessageNotification.rawValue + message.messageId), object: nil)
+            case .video(_, _):
+                NotificationCenter.default.addObserver(self, selector: #selector(didUpdateVideoMessage(notification:)), name: NSNotification.Name(rawValue: kDidUpdateVideoMessageNotification.rawValue + message.messageId), object: nil)
+            default:
+                break
+            }
+        }
+    }
+    
     open var messageContainerView: MessageContainerView = {
         let containerView = MessageContainerView()
         containerView.clipsToBounds = true
@@ -51,7 +64,7 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
         label.numberOfLines = 0
         return label
     }()
-
+    
     open weak var delegate: MessageCellDelegate?
 
     public override init(frame: CGRect) {
@@ -94,6 +107,8 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
     }
 
     open func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
+        self.message = message
+        
         guard let dataSource = messagesCollectionView.messagesDataSource else {
             fatalError(MessageKitError.nilMessagesDataSource)
         }
@@ -126,7 +141,7 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
         let touchLocation = gesture.location(in: self)
 
         switch true {
-        case messageContainerView.frame.contains(touchLocation) && !cellContentView(canHandle: convert(touchLocation, to: messageContainerView)):
+        case messageContainerView.frame.contains(touchLocation) && !cellContentView(canHandle: convert(touchLocation, to: messageContainerView)) && !cellCustomView(canHandle: convert(touchLocation, to: messageContainerView)):
             delegate?.didTapMessage(in: self)
         case avatarView.frame.contains(touchLocation):
             delegate?.didTapAvatar(in: self)
@@ -151,5 +166,17 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
     /// Handle `ContentView`'s tap gesture, return false when `ContentView` doesn't needs to handle gesture
     open func cellContentView(canHandle touchPoint: CGPoint) -> Bool {
         return false
+    }
+    
+    open func cellCustomView(canHandle touchPoint: CGPoint) -> Bool {
+        return false
+    }
+    
+    @objc open func didUpdatePhotoMessage(notification: Notification) {
+
+    }
+    
+    @objc open func didUpdateVideoMessage(notification: Notification) {
+
     }
 }

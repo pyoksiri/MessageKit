@@ -49,7 +49,7 @@ open class MessageLabel: UILabel {
         return textStorage
     }()
 
-    private lazy var rangesForDetectors: [DetectorType: [(NSRange, MessageTextCheckingType)]] = [:]
+    open var rangesForDetectors: [DetectorType: [(NSRange, MessageTextCheckingType)]] = [:]
     
     private var isConfiguring: Bool = false
 
@@ -413,7 +413,7 @@ open class MessageLabel: UILabel {
     
 }
 
-private enum MessageTextCheckingType {
+public enum MessageTextCheckingType {
     case addressComponents([NSTextCheckingKey: String]?)
     case date(Date?)
     case phoneNumber(String?)
