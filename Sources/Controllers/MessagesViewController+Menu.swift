@@ -31,11 +31,13 @@ extension MessagesViewController {
     /// Add observer for `UIMenuControllerWillShowMenu` notification
     func addMenuControllerObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.menuControllerWillShow(_:)), name: .UIMenuControllerWillShowMenu, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.menuControllerWillHide(_:)), name: .UIMenuControllerWillHideMenu, object: nil)
     }
 
     /// Remove observer for `UIMenuControllerWillShowMenu` notification
     func removeMenuControllerObservers() {
         NotificationCenter.default.removeObserver(self, name: .UIMenuControllerWillShowMenu, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .UIMenuControllerWillHideMenu, object: nil)
     }
 
     // MARK: - Notification Handlers
@@ -52,12 +54,13 @@ extension MessagesViewController {
             NotificationCenter.default.addObserver(self,
                                                    selector: #selector(MessagesViewController.menuControllerWillShow(_:)),
                                                    name: .UIMenuControllerWillShowMenu, object: nil)
-            selectedIndexPathForMenu = nil
         }
 
         currentMenuController.setMenuVisible(false, animated: false)
 
         guard let selectedCell = messagesCollectionView.cellForItem(at: selectedIndexPath) as? MessageCollectionViewCell else { return }
+        selectedCell.messageContainerView.backgroundColor = selectedCell.messageContainerView.backgroundColor?.darkerColor()
+        
         let selectedCellMessageBubbleFrame = selectedCell.convert(selectedCell.messageContainerView.frame, to: view)
 
         var messageInputBarFrame: CGRect = .zero
@@ -90,6 +93,21 @@ extension MessagesViewController {
         currentMenuController.setMenuVisible(true, animated: true)
     }
 
+    @objc
+    private func menuControllerWillHide(_ notification: Notification) {
+        
+        guard let currentMenuController = notification.object as? UIMenuController,
+            let selectedIndexPath = selectedIndexPathForMenu else { return }
+        
+        NotificationCenter.default.removeObserver(self, name: .UIMenuControllerWillHideMenu, object: nil)
+        defer {
+            NotificationCenter.default.addObserver(self,
+                                                   selector: #selector(MessagesViewController.menuControllerWillHide(_:)),
+                                                   name: .UIMenuControllerWillHideMenu, object: nil)
+            selectedIndexPathForMenu = nil
+        }
+        messagesCollectionView.reloadItems(at: [selectedIndexPath])
+    }
     // MARK: - Helpers
 
     private var navigationBarFrame: CGRect {

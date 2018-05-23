@@ -36,4 +36,11 @@ extension UIColor {
 
     static let sendButtonBlue = UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
 
+    func darkerColor() -> UIColor {
+        var r:CGFloat = 0, g:CGFloat = 0, b:CGFloat = 0, a:CGFloat = 0
+        if self.getRed(&r, green: &g, blue: &b, alpha: &a){
+            return UIColor(red: max(r - 0.2, 0.0), green: max(g - 0.2, 0.0), blue: max(b - 0.2, 0.0), alpha: a)
+        }
+        return UIColor()
+    }
 }

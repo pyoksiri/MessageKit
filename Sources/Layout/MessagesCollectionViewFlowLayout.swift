@@ -454,6 +454,10 @@ private extension MessagesCollectionViewFlowLayout {
                 links.append(String(url))
             }
             messageContainerSize.height += attributes.messageLabelVerticalInsets + CGFloat(links.count * 60)
+            if links.count > 0, messageContainerSize.width < 200.0  {
+                messageContainerSize.width = 200.0
+            }
+            
         case .attributedText(let text):
             messageContainerSize = labelSize(for: text, considering: maxWidth)
             messageContainerSize.width += attributes.messageLabelHorizontalInsets

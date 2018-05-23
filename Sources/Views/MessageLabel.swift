@@ -59,31 +59,31 @@ open class MessageLabel: UILabel {
 
     open var enabledDetectors: [DetectorType] = [] {
         didSet {
-            setTextStorage(attributedText, shouldParse: true)
+            setTextStorage(attributedText, shouldParse: true, highlightRange: nil)
         }
     }
 
     open override var attributedText: NSAttributedString? {
         didSet {
-            setTextStorage(attributedText, shouldParse: true)
+            setTextStorage(attributedText, shouldParse: true, highlightRange: nil)
         }
     }
 
     open override var text: String? {
         didSet {
-            setTextStorage(attributedText, shouldParse: true)
+            setTextStorage(attributedText, shouldParse: true, highlightRange: nil)
         }
     }
 
     open override var font: UIFont! {
         didSet {
-            setTextStorage(attributedText, shouldParse: false)
+            setTextStorage(attributedText, shouldParse: false, highlightRange: nil)
         }
     }
 
     open override var textColor: UIColor! {
         didSet {
-            setTextStorage(attributedText, shouldParse: false)
+            setTextStorage(attributedText, shouldParse: false, highlightRange: nil)
         }
     }
 
@@ -103,7 +103,7 @@ open class MessageLabel: UILabel {
 
     open override var textAlignment: NSTextAlignment {
         didSet {
-            setTextStorage(attributedText, shouldParse: false)
+            setTextStorage(attributedText, shouldParse: false, highlightRange: nil)
         }
     }
 
@@ -121,7 +121,7 @@ open class MessageLabel: UILabel {
         return [
             NSAttributedStringKey.foregroundColor: UIColor.lightGray,
             NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
-            NSAttributedStringKey.underlineColor: UIColor.lightGray
+            NSAttributedStringKey.underlineColor: UIColor.lightGray,
         ]
     }()
 
@@ -133,6 +133,8 @@ open class MessageLabel: UILabel {
 
     open internal(set) var urlAttributes: [NSAttributedStringKey: Any] = defaultAttributes
 
+    open internal(set) var highlightAttributes: [NSAttributedStringKey: Any] = defaultAttributes
+    
     public func setAttributes(_ attributes: [NSAttributedStringKey: Any], detector: DetectorType) {
         switch detector {
         case .phoneNumber:
@@ -192,7 +194,7 @@ open class MessageLabel: UILabel {
 
     // MARK: - Private Methods
 
-    private func setTextStorage(_ newText: NSAttributedString?, shouldParse: Bool) {
+    private func setTextStorage(_ newText: NSAttributedString?, shouldParse: Bool, highlightRange: NSRange?) {
 
         guard let newText = newText, newText.length > 0 else {
             textStorage.setAttributedString(NSAttributedString())
@@ -219,6 +221,10 @@ open class MessageLabel: UILabel {
                     mutableText.addAttributes(attributes, range: range)
                 }
             }
+        }
+        
+        if let highlightRange = highlightRange {
+            mutableText.addAttributes(highlightAttributes, range: highlightRange)
         }
 
         let modifiedText = NSAttributedString(attributedString: mutableText)
@@ -365,6 +371,15 @@ open class MessageLabel: UILabel {
         for (detectorType, ranges) in rangesForDetectors {
             for (range, value) in ranges {
                 if range.contains(index) {
+                    if let attributedText = self.attributedText {
+                        setTextStorage(attributedText, shouldParse: false, highlightRange: range)
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+                            UIView.animate(withDuration: 0.25, delay: 0.0, options: .transitionCrossDissolve, animations: {
+                                self.setTextStorage(attributedText, shouldParse: true, highlightRange: nil)
+                            }, completion: nil)
+                        }
+                    }
                     handleGesture(for: detectorType, value: value)
                     return true
                 }

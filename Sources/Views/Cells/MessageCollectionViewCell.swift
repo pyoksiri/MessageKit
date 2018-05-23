@@ -171,7 +171,7 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
     open func cellCustomView(canHandle touchPoint: CGPoint) -> Bool {
         return false
     }
-    
+
     @objc open func didUpdatePhotoMessage(notification: Notification) {
 
     }
