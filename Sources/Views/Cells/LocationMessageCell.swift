@@ -108,4 +108,8 @@ open class LocationMessageCell: MessageCollectionViewCell {
             animationBlock?(self.imageView)
         }
     }
+    
+    override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        return action == #selector(pin(_:))
+    }
 }

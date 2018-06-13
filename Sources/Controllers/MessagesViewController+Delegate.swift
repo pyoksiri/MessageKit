@@ -69,34 +69,40 @@ extension MessagesViewController: UICollectionViewDelegateFlowLayout {
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
 
         switch message.data {
-        case .text, .attributedText, .emoji, .photo:
+        case .text, .attributedText, .emoji, .networkPhoto, .photo:
             selectedIndexPathForMenu = indexPath
             return true
         default:
             return false
         }
     }
-
+    
     open func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return (action == NSSelectorFromString("copy:"))
+        return action == NSSelectorFromString("copy:") || action == NSSelectorFromString("pin:")
     }
+
 
     open func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
         guard let messagesDataSource = messagesCollectionView.messagesDataSource else {
             fatalError(MessageKitError.nilMessagesDataSource)
         }
-        let pasteBoard = UIPasteboard.general
-        let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
-
-        switch message.data {
-        case .text(let text), .emoji(let text):
-            pasteBoard.string = text
-        case .attributedText(let attributedText):
-            pasteBoard.string = attributedText.string
-        case .photo(let image):
-            pasteBoard.image = image
-        default:
-            break
+        if action == NSSelectorFromString("copy:") {
+            let pasteBoard = UIPasteboard.general
+            let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+            
+            switch message.data {
+            case .text(let text), .emoji(let text):
+                pasteBoard.string = text
+            case .attributedText(let attributedText):
+                pasteBoard.string = attributedText.string
+            case .photo(let image):
+                pasteBoard.image = image
+            default:
+                break
+            }
+        } else if action == NSSelectorFromString("pin:") {
+            let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+            messagesViewControllerDidSelectPin(message)
         }
     }
 }

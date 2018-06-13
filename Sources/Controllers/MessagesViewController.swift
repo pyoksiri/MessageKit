@@ -32,8 +32,18 @@ open class MessagesViewController: UIViewController {
     open var messagesCollectionView = MessagesCollectionView()
 
     /// The `MessageInputBar` used as the `inputAccessoryView` in the view controller.
-    open var messageInputBar = MessageInputBar()
+    open var messageInputBar = MessageInputBar() {
+        didSet {
+            view.addSubview(messageInputBar)
+            setupMessageInputConstraints()
+        }
+    }
 
+    open var messageBarHeight: CGFloat {
+        get {
+            return messageInputBar.contentView.isHidden ? 0.0 : messageInputBar.frame.size.height + 8.0
+        }
+    }
     /// A Boolean value that determines whether the `MessagesCollectionView` scrolls to the
     /// bottom whenever the `InputTextView` begins editing.
     ///
@@ -46,13 +56,23 @@ open class MessagesViewController: UIViewController {
     /// The default value of this property is `false`.
     open var maintainPositionOnKeyboardFrameChanged: Bool = false
 
+    open var bottomInset: NSLayoutConstraint!
+    // This holds height of keypad
+    open var maxKeypadHeight: CGFloat = 0 {
+        didSet {
+            self.updateCollectionViewInsets(maxKeypadHeight + messageBarHeight)
+        }
+    }
+    
+    open var isListeningKeypadChange = false
+
     open override var canBecomeFirstResponder: Bool {
         return true
     }
 
-    open override var inputAccessoryView: UIView? {
+    /*open override var inputAccessoryView: UIView? {
         return messageInputBar
-    }
+    }*/
 
     open override var shouldAutorotate: Bool {
         return false
@@ -71,6 +91,7 @@ open class MessagesViewController: UIViewController {
         }
     }
 
+    var beforeCollectionViewBottomInset: CGFloat = 0
     // MARK: - View Life Cycle
 
     open override func viewDidLoad() {
@@ -89,7 +110,7 @@ open class MessagesViewController: UIViewController {
         if isFirstLayout {
             defer { isFirstLayout = false }
             addKeyboardObservers()
-            messageCollectionViewBottomInset = keyboardOffsetFrame.height
+            self.updateCollectionViewInsets(messageInputBar.frame.size.height)
         }
         adjustScrollViewInset()
     }
@@ -141,7 +162,6 @@ open class MessagesViewController: UIViewController {
     /// Sets the constraints of the `MessagesCollectionView`.
     private func setupConstraints() {
         messagesCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        
         let top = messagesCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: topLayoutGuide.length)
         let bottom = messagesCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         if #available(iOS 11.0, *) {
@@ -152,6 +172,23 @@ open class MessagesViewController: UIViewController {
             let leading = messagesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
             let trailing = messagesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             NSLayoutConstraint.activate([top, bottom, trailing, leading])
+        }
+    }
+    
+    private func setupMessageInputConstraints() {
+        messageInputBar.translatesAutoresizingMaskIntoConstraints = false
+        
+        bottomInset = NSLayoutConstraint.init(item: messageInputBar, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottomMargin, multiplier: 1.0, constant: 0.0)
+        bottomInset.isActive = true
+        
+        if #available(iOS 11.0, *) {
+            let leading = messageInputBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor)
+            let trailing = messageInputBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+            NSLayoutConstraint.activate([trailing, leading])
+        } else {
+            let leading = messageInputBar.leadingAnchor.constraint(equalTo: view.leadingAnchor)
+            let trailing = messageInputBar.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            NSLayoutConstraint.activate([trailing, leading])
         }
     }
     
@@ -166,5 +203,9 @@ open class MessagesViewController: UIViewController {
     
     @objc private func clearMemoryCache() {
         MessageStyle.bubbleImageCache.removeAllObjects()
+    }
+    
+    open func messagesViewControllerDidSelectPin(_ message: MessageType) {
+        
     }
 }

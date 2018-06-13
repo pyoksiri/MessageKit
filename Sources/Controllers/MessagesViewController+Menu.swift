@@ -32,6 +32,9 @@ extension MessagesViewController {
     func addMenuControllerObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.menuControllerWillShow(_:)), name: .UIMenuControllerWillShowMenu, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.menuControllerWillHide(_:)), name: .UIMenuControllerWillHideMenu, object: nil)
+        
+        let pinMenuItem = UIMenuItem(title: NSLocalizedString("Pin", comment: "pin"), action: NSSelectorFromString("pin:"))
+        UIMenuController.shared.menuItems = [pinMenuItem]
     }
 
     /// Remove observer for `UIMenuControllerWillShowMenu` notification
@@ -57,7 +60,7 @@ extension MessagesViewController {
         }
 
         currentMenuController.setMenuVisible(false, animated: false)
-
+        
         guard let selectedCell = messagesCollectionView.cellForItem(at: selectedIndexPath) as? MessageCollectionViewCell else { return }
         selectedCell.messageContainerView.backgroundColor = selectedCell.messageContainerView.backgroundColor?.darkerColor()
         
@@ -88,7 +91,7 @@ extension MessagesViewController {
         else if selectedCellMessageBubblePlusMenuFrame.intersects(topNavigationBarFrame) {
             currentMenuController.arrowDirection = .up
         }
-
+        
         currentMenuController.setTargetRect(targetRect, in: view)
         currentMenuController.setMenuVisible(true, animated: true)
     }

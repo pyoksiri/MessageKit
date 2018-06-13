@@ -114,4 +114,8 @@ open class TextMessageCell: MessageCollectionViewCell {
             return false
         }
     }
+    
+    override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        return action == NSSelectorFromString("copy:") || action == #selector(pin(_:))
+    }
 }

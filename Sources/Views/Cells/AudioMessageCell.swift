@@ -120,4 +120,7 @@ open class AudioMessageCell: MessageCollectionViewCell {
         playButton.isSelected = !playButton.isSelected
     }
 
+    override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        return action == #selector(pin(_:))
+    }
 }

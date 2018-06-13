@@ -114,6 +114,10 @@ open class MediaMessageCell: MessageCollectionViewCell {
         }
     }
     
+    override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        return action == #selector(pin(_:))
+    }
+    
     @objc override open func didUpdatePhotoMessage(notification: Notification) {
         if let progress = notification.object as? Progress {
             let progressValue = (Double(progress.completedUnitCount) / Double(progress.totalUnitCount)) * 100.0

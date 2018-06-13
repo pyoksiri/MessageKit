@@ -179,4 +179,10 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
     @objc open func didUpdateVideoMessage(notification: Notification) {
 
     }
+    
+    @objc open func pin(_ sender: Any?) {
+        let collectionView = self.superview as! UICollectionView
+        let d:UICollectionViewDelegate = collectionView.delegate!
+        d.collectionView!(collectionView, performAction: NSSelectorFromString("pin:"), forItemAt: collectionView.indexPath(for: self)!, withSender: self)
+    }
 }
