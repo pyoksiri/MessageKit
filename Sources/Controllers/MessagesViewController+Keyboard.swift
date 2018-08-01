@@ -65,10 +65,12 @@ extension MessagesViewController {
             // Hardware keyboard is found
             if view.frame.size.height - keyboardEndFrame.origin.y == 0 {
             } else {
-                let afterBottomInset = keyboardEndFrame.height > keyboardOffsetFrame.height ? (keyboardEndFrame.height - iPhoneXBottomInset) : keyboardOffsetFrame.height
-                let differenceOfBottomInset = afterBottomInset - beforeCollectionViewBottomInset
-                let contentOffset = CGPoint(x: messagesCollectionView.contentOffset.x, y: messagesCollectionView.contentOffset.y + differenceOfBottomInset)
-                messagesCollectionView.setContentOffset(contentOffset, animated: false)
+                if keyboardOffsetFrame.height != 0 {
+                    let afterBottomInset = keyboardEndFrame.height > keyboardOffsetFrame.height ? (keyboardEndFrame.height - iPhoneXBottomInset) : keyboardOffsetFrame.height
+                    let differenceOfBottomInset = afterBottomInset - beforeCollectionViewBottomInset
+                    let contentOffset = CGPoint(x: messagesCollectionView.contentOffset.x, y: messagesCollectionView.contentOffset.y + differenceOfBottomInset)
+                    messagesCollectionView.setContentOffset(contentOffset, animated: false)
+                }
             }
         } else {
             //Software keyboard is found
