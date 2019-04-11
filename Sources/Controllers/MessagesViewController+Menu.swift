@@ -29,12 +29,15 @@ extension MessagesViewController {
     // MARK: - Register / Unregister Observers
 
     /// Add observer for `UIMenuControllerWillShowMenu` notification
-    func addMenuControllerObservers() {
+    open func addMenuControllerObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.menuControllerWillShow(_:)), name: .UIMenuControllerWillShowMenu, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.menuControllerWillHide(_:)), name: .UIMenuControllerWillHideMenu, object: nil)
         
-        let pinMenuItem = UIMenuItem(title: NSLocalizedString("Pin", comment: "pin"), action: NSSelectorFromString("pin:"))
-        UIMenuController.shared.menuItems = [pinMenuItem]
+        var menuItems = [UIMenuItem]()
+        if isPinEnableMenuController {
+            menuItems.append(UIMenuItem(title: NSLocalizedString("Pin", comment: "pin"), action: NSSelectorFromString("pin:")))
+        }
+        UIMenuController.shared.menuItems = menuItems
     }
 
     /// Remove observer for `UIMenuControllerWillShowMenu` notification

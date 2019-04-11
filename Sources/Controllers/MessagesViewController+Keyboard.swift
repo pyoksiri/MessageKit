@@ -83,7 +83,7 @@ extension MessagesViewController {
             beforeCollectionViewBottomInset = afterBottomInset
         }
         
-        if self.isListeningKeypadChange {
+        if self.isListeningKeypadChange == true {
             self.maxKeypadHeight = keyboardEndFrame.height
             var options = UIViewAnimationOptions.beginFromCurrentState
             if let animationCurve = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? UInt {
@@ -125,7 +125,7 @@ extension MessagesViewController {
     /// - Returns: The safeAreaInsets.bottom if its an iPhoneX, else 0
     private var iPhoneXBottomInset: CGFloat {
         if #available(iOS 11.0, *) {
-            guard UIScreen.main.nativeBounds.height == 2436 else { return 0 }
+//            guard UIScreen.main.nativeBounds.height == 2436 else { return 0 }
             return view.safeAreaInsets.bottom
         }
         return 0

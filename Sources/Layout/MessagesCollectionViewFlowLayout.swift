@@ -451,13 +451,16 @@ private extension MessagesCollectionViewFlowLayout {
             for match in matches {
                 guard let range = Range(match.range, in: text) else { continue }
                 let url = text[range]
-                links.append(String(url))
+                if url.hasPrefix("wolf") {
+                } else if url.hasPrefix("user") {
+                } else {
+                    links.append(String(url))
+                }
             }
             messageContainerSize.height += attributes.messageLabelVerticalInsets + CGFloat(links.count * 60)
             if links.count > 0, messageContainerSize.width < 200.0  {
                 messageContainerSize.width = 200.0
             }
-            
         case .attributedText(let text):
             messageContainerSize = labelSize(for: text, considering: maxWidth)
             messageContainerSize.width += attributes.messageLabelHorizontalInsets

@@ -27,7 +27,8 @@ import UIKit
 open class MessagesViewController: UIViewController {
     
     // MARK: - Properties [Public]
-
+    open var isPinEnableMenuController : Bool = true
+    
     /// The `MessagesCollectionView` managed by the messages view controller object.
     open var messagesCollectionView = MessagesCollectionView()
 
@@ -101,7 +102,6 @@ open class MessagesViewController: UIViewController {
         setupConstraints()
         registerReusableViews()
         setupDelegates()
-        addMenuControllerObservers()
         addObservers()
     }
     
