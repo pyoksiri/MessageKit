@@ -22,6 +22,11 @@ open class UIPaddingLabel: UILabel {
         self.layer.masksToBounds = true
     }
     
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+        self.layer.cornerRadius = self.frame.size.height/2
+    }
+    
     open override var intrinsicContentSize: CGSize {
         get {
             var contentSize = super.intrinsicContentSize
